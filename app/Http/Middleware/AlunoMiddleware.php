@@ -7,6 +7,11 @@ use Auth;
 
 class AlunoMiddleware
 {
+    protected $dashboards = [
+        2 => 'professor',
+        3 => 'diretor',
+        4 => 'administrador'
+    ];
     /**
      * Handle an incoming request.
      *
@@ -20,17 +25,11 @@ class AlunoMiddleware
             return redirect()->route('login');
         }
 
-        if (Auth::user()->role->slug == 'aluno') {
+        if (Auth::user()->role_id == 1) {
             return $next($request);
         }
 
-		$dashboards = [
-            'professor' => 'professor',
-            'diretor' => 'diretor',
-            'administrador' => 'administrador'
-        ];
-
-		return redirect()->route($dashboards[Auth::user()->role->slug].'.home');
+		return redirect()->route($this->dashboards[Auth::user()->role_id].'.home');
 
     }
 }

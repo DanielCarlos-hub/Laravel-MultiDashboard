@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::namespace('Auth')->group(function(){
-	Route::get('/', 'LoginController@showLoginForm');
+	Route::get('/', 'LoginController@showLoginForm')->name('home');
 	Route::post('/', 'LoginController@login')->name('login');
 	Route::post('logout', 'LoginController@logout')->name('logout');
 	Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
@@ -24,7 +24,7 @@ Route::namespace('Auth')->group(function(){
 });
 
 
-Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function(){
+Route::namespace('Administrador')->middleware('admin')->prefix('admin')->group(function(){
 	//Home
 	Route::get('/home', 'HomeController@index')->name('administrador.home');
 

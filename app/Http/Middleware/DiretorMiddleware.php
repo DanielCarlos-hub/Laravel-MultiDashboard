@@ -6,6 +6,11 @@ use Closure;
 use Auth;
 class DiretorMiddleware
 {
+    protected $dashboards = [
+        1 => 'aluno',
+        2 => 'professor',
+        4 => 'administrador'
+    ];
     /**
      * Handle an incoming request.
      *
@@ -19,17 +24,11 @@ class DiretorMiddleware
             return redirect()->route('login');
         }
 
-        if (Auth::user()->role->slug == 'diretor') {
+        if (Auth::user()->role_id  == 3) {
             return $next($request);
         }
 
-		$dashboards = [
-            'aluno' => 'aluno',
-            'professor' => 'professor',
-            'administrador' => 'administrador'
-        ];
-
-		return redirect()->route($dashboards[Auth::user()->role->slug].'.home');
+		return redirect()->route($this->dashboards[Auth::user()->role_id ].'.home');
 
     }
 }

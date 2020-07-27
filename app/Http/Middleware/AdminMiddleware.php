@@ -7,6 +7,11 @@ use Auth;
 
 class AdminMiddleware
 {
+    protected $dashboards = [
+        1 => 'aluno',
+        2 => 'professor',
+        3 => 'diretor'
+    ];
     /**
      * Handle an incoming request.
      *
@@ -20,17 +25,13 @@ class AdminMiddleware
             return redirect()->route('login');
         }
 
-        if (Auth::user()->role->slug == 'administrador') {
+        if (Auth::user()->role_id  == 4) {
             return $next($request);
         }
 
-		$dashboards = [
-            'aluno' => 'aluno',
-            'professor' => 'professor',
-            'diretor' => 'diretor'
-        ];
 
-		return redirect()->route($dashboards[Auth::user()->role->slug].'.home');
+
+		return redirect()->route($this->dashboards[Auth::user()->role_id ].'.home');
 
     }
 }
